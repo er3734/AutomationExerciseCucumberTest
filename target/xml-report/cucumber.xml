@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="7.144">
+    <testcase classname="TC10 Verify Subscription in home page" name="Verify Subscription in home page" time="6.95">
+        <system-out>
+            <![CDATA[Given Navigate to "autoexUrl" autoexercise..................................passed
+Then Verify that home page is visible successfully..........................passed
+And Scroll down to footer...................................................passed
+Then Verify text SUBSCRIPTION...............................................passed
+And Enter email address in input and click arrow button.....................passed
+Then Verify success message You have been successfully subscribed! is visible.passed
+]]>
+        </system-out>
+    </testcase>
+</testsuite>
