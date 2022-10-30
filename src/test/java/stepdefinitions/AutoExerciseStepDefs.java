@@ -22,7 +22,7 @@ public class AutoExerciseStepDefs {
     Faker faker = new Faker();
     Actions actions = new Actions(Driver.getDriver());
 
-    SoftAssert softAssert=new SoftAssert();
+    SoftAssert softAssert = new SoftAssert();
 
 
     @Given("Navigate to {string} autoexercise")
@@ -151,15 +151,18 @@ public class AutoExerciseStepDefs {
         autoexPage.loginEmailBox.sendKeys(ConfigReader.getProperty("validEmail"));
         actions.sendKeys(Keys.TAB).sendKeys(ConfigReader.getProperty("validPassword")).perform();
     }
+
     @And("Verify error Your email or password is incorrect! is visible")
     public void verifyErrorYourEmailOrPasswordIsIncorrectIsVisible() {
         assert autoexPage.yourEmailOrPasswordIsIncorrectText.isDisplayed();
     }
+
     @And("Click Logout button")
     public void clickLogoutButton() {
         autoexPage.logOutButton.click();
 
     }
+
     @Then("Verify that user is navigated to login page")
     public void verifyThatUserIsNavigatedToLoginPage() {
         assert autoexPage.loginYourAccountText.isDisplayed();
@@ -173,7 +176,7 @@ public class AutoExerciseStepDefs {
 
     @Then("Verify error Email Address already exist! is visible")
     public void verifyErrorEmailAddressAlreadyExistIsVisible() {
-     assert    autoexPage.emailAddressAlreadyExistBox.isDisplayed();
+        assert autoexPage.emailAddressAlreadyExistBox.isDisplayed();
     }
 
     @And("Click on Contact Us button")
@@ -194,16 +197,17 @@ public class AutoExerciseStepDefs {
                 sendKeys(Keys.TAB).
                 sendKeys(faker.artist().name()).
                 sendKeys(Keys.TAB).
-                sendKeys(faker.lorem().characters(5,20)).perform();
+                sendKeys(faker.lorem().characters(5, 20)).perform();
     }
 
     @And("Upload file")
     public void uploadFile() {
 
-        String homeDirectory=System.getProperty("user.home");
-        String filePath=homeDirectory+"/Desktop\\\\text.txt";
+        String homeDirectory = System.getProperty("user.home");
+        String filePath = homeDirectory + "/Desktop\\\\text.txt";
         autoexPage.dosyaSecbutton.sendKeys(filePath);
     }
+
     @And("Click OK button")
     public void clickOKButton() {
         Driver.getDriver().switchTo().alert().accept();
@@ -224,7 +228,7 @@ public class AutoExerciseStepDefs {
 
     @And("Click Submit button")
     public void clickSubmitButton() {
-       autoexPage.submitButon.click();
+        autoexPage.submitButon.click();
     }
 
     @And("Click on Test Cases button")
@@ -254,7 +258,7 @@ public class AutoExerciseStepDefs {
 
     @And("Click on View Product of first product")
     public void clickOnViewProductOfFirstProduct() {
-        List<WebElement>wievProductsList=autoexPage.wievProductsList;
+        List<WebElement> wievProductsList = autoexPage.viewProductsList;
         ReusableMethods.jsScrollClick(wievProductsList.get(0));
     }
 
@@ -267,6 +271,7 @@ public class AutoExerciseStepDefs {
         softAssert.assertTrue(autoexPage.productName.isDisplayed());
         softAssert.assertTrue(autoexPage.categoryName.isDisplayed());
         softAssert.assertTrue(autoexPage.productPrice.isDisplayed());
+        softAssert.assertTrue(autoexPage.productAvailability.isDisplayed());
         softAssert.assertTrue(autoexPage.productCondition.isDisplayed());
         softAssert.assertTrue(autoexPage.productBrand.isDisplayed());
         softAssert.assertAll();
@@ -281,13 +286,14 @@ public class AutoExerciseStepDefs {
 
     @Then("Verify SEARCHED PRODUCTS is visible")
     public void verifySEARCHEDPRODUCTSIsVisible() {
-        Assert.assertTrue(autoexPage.searchProductsText.isDisplayed()); ;
+        Assert.assertTrue(autoexPage.searchProductsText.isDisplayed());
+        ;
     }
 
     @Then("Verify all the products related to search are visible")
     public void verifyAllTheProductsRelatedToSearchAreVisible() {
-        List<WebElement>searchTshirtList=autoexPage.searchTShirtList;
-        for (int i = 0; i <searchTshirtList.size() ; i++) {
+        List<WebElement> searchTshirtList = autoexPage.searchTShirtList;
+        for (int i = 0; i < searchTshirtList.size(); i++) {
             searchTshirtList.get(i).getText().contains("T-Shirt");
             i++;
         }
@@ -305,13 +311,77 @@ public class AutoExerciseStepDefs {
 
     @And("Enter email address in input and click arrow button")
     public void enterEmailAddressInInputAndClickArrowButton() {
-        autoexPage.susbscribeEmailBox.sendKeys(ConfigReader.getProperty("validEmail"),Keys.ENTER);
+        autoexPage.susbscribeEmailBox.sendKeys(ConfigReader.getProperty("validEmail"), Keys.ENTER);
     }
 
     @Then("Verify success message You have been successfully subscribed! is visible")
     public void verifySuccessMessageYouHaveBeenSuccessfullySubscribedIsVisible() {
         System.out.println(autoexPage.youHaveBeenSuccessfullySubscribed.getText());
         assert autoexPage.youHaveBeenSuccessfullySubscribed.isDisplayed();
+    }
+
+    @And("Click Cart button")
+    public void clickCartButton() {
+        autoexPage.cartButton.click();
+    }
+
+    @And("Click Products button")
+    public void clickProductsButton() {
+        autoexPage.productsButton.click();
+    }
+
+    @And("Hover over first product and click Add to cart")
+    public void hoverOverFirstProductAndClickAddToCart() {
+        ReusableMethods.jsScrollClick(autoexPage.productsAddCartList.get(1));
+    }
+
+    @And("Click Continue Shopping button")
+    public void clickContinueShoppingButton() {
+        autoexPage.continueShoppingButton.click();
+    }
+
+    @And("Hover over second product and click Add to cart")
+    public void hoverOverSecondProductAndClickAddToCart() {
+        ReusableMethods.jsScrollClick(autoexPage.productsAddCartList.get(3));
+    }
+
+    @And("Click View Cart button")
+    public void clickViewCartButton() {
+        autoexPage.viewCartButton.click();
+    }
+
+    @Then("Verify both products are added to Cart")
+    public void verifyBothProductsAreAddedToCart() {
+        assert autoexPage.cartShoppingList.size()==2;
+    }
+
+    @Then("Verify their prices, quantity and total price")
+    public void verifyTheirPricesQuantityAndTotalPrice() {
+
+        int firstExpectedPrice= Integer.parseInt(autoexPage.productsPriceList.get(0).getText().replaceAll("\\D",""));
+        System.out.println("firstExpectedPrice = " + firstExpectedPrice);
+        int secondtExpectedPrice= Integer.parseInt(autoexPage.productsPriceList.get(2).getText().replaceAll("\\D",""));
+        System.out.println("secondtExpectedPrice = " + secondtExpectedPrice);
+        int expectedTotalPrice=firstExpectedPrice+secondtExpectedPrice;
+        System.out.println("expectedTotalPrice = " + expectedTotalPrice);
+        int firstActualPrice= Integer.parseInt(autoexPage.cartPriceList.get(0).getText().replaceAll("\\D",""));
+        System.out.println("firstActualPrice = " + firstActualPrice);
+        int secondActualPrice= Integer.parseInt(autoexPage.cartPriceList.get(1).getText().replaceAll("\\D",""));
+        System.out.println("secondActualPrice = " + secondActualPrice);
+        int actualTotalPrice=firstActualPrice+secondActualPrice;
+        System.out.println("actualTotalPrice = " + actualTotalPrice);
+        String acrtualFirstProductQuantity=autoexPage.productQuantityList.get(0).getText();
+        System.out.println("acrtualFirstProductQuantity = " + acrtualFirstProductQuantity);
+        String acrtualSecondProductQuantity=autoexPage.productQuantityList.get(1).getText();
+        System.out.println("acrtualSecondProductQuantity = " + acrtualSecondProductQuantity);
+
+        softAssert.assertEquals(firstActualPrice,firstExpectedPrice);
+        softAssert.assertEquals(secondActualPrice,secondtExpectedPrice);
+        softAssert.assertEquals(actualTotalPrice,expectedTotalPrice);
+        softAssert.assertEquals(acrtualFirstProductQuantity,"1");
+        softAssert.assertEquals(acrtualSecondProductQuantity,"1");
+        softAssert.assertAll();
+
 
     }
 }

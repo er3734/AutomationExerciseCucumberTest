@@ -8,9 +8,10 @@ import utilities.Driver;
 import java.util.List;
 
 public class AutoExercisePage {
-    public AutoExercisePage(){
-        PageFactory.initElements(Driver.getDriver(),this);
+    public AutoExercisePage() {
+        PageFactory.initElements(Driver.getDriver(), this);
     }
+
     @FindBy(xpath = "//*[text()=' Signup / Login']")
     public WebElement signup_login;
     @FindBy(xpath = "(//h2)[3]")
@@ -66,7 +67,7 @@ public class AutoExercisePage {
     @FindBy(xpath = "//*[@class='col-sm-4']")
     public List<WebElement> urunlerList;
     @FindBy(xpath = "//*[text()='View Product']")
-    public List<WebElement> wievProductsList;
+    public List<WebElement> viewProductsList;
     @FindBy(xpath = "//*[text()='Blue Top']")
     public WebElement productName;
     @FindBy(xpath = "//*[text()='Category: Women > Tops']")
@@ -93,18 +94,22 @@ public class AutoExercisePage {
     public WebElement susbscribeEmailBox;
     @FindBy(xpath = "//*[@id='success-subscribe']")
     public WebElement youHaveBeenSuccessfullySubscribed;
-
-
-
-
-
-
-
-
-
-
-
-
+    @FindBy(xpath = "//*[text()=' Cart']")
+    public WebElement cartButton;
+    @FindBy(xpath = "//*[@class='btn btn-default add-to-cart']")
+    public List<WebElement>productsAddCartList;
+    @FindBy(xpath = "//*[@class='btn btn-success close-modal btn-block']")
+    public WebElement continueShoppingButton;
+    @FindBy(xpath = "//*[text()='View Cart']")
+    public WebElement viewCartButton;
+    @FindBy(xpath = "//tbody//tr")
+    public List<WebElement>cartShoppingList;
+    @FindBy(xpath = "//tbody//tr//td[@class='cart_total']")
+    public List<WebElement>cartPriceList;
+    @FindBy(xpath = "//*[contains(text(), 'Rs.')]")
+    public List<WebElement>productsPriceList;
+    @FindBy(xpath = "//tbody//tr//td[@class='cart_quantity']//button")
+    public List<WebElement>productQuantityList;
 
 
 }

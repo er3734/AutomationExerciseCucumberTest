@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="7.144">
-    <testcase classname="TC10 Verify Subscription in home page" name="Verify Subscription in home page" time="6.95">
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="48.63">
+    <testcase classname="TC12 Add Products in Cart" name="Add Products in Cart" time="48.453">
         <system-out>
             <![CDATA[Given Navigate to "autoexUrl" autoexercise..................................passed
 Then Verify that home page is visible successfully..........................passed
-And Scroll down to footer...................................................passed
-Then Verify text SUBSCRIPTION...............................................passed
-And Enter email address in input and click arrow button.....................passed
-Then Verify success message You have been successfully subscribed! is visible.passed
+And Click Products button...................................................passed
+And Hover over first product and click Add to cart..........................passed
+And Click Continue Shopping button..........................................passed
+And Hover over second product and click Add to cart.........................passed
+And Click View Cart button..................................................passed
+Then Verify both products are added to Cart.................................passed
+Then Verify their prices, quantity and total price..........................passed
 ]]>
         </system-out>
     </testcase>
