@@ -110,6 +110,37 @@ public class AutoExercisePage {
     public List<WebElement>productsPriceList;
     @FindBy(xpath = "//tbody//tr//td[@class='cart_quantity']//button")
     public List<WebElement>productQuantityList;
-
+    @FindBy(xpath = "//*[@class='product-information']")
+    public WebElement productDetail;
+    @FindBy(xpath = "//*[@id='quantity']")
+    public WebElement productQuantityBox;
+    @FindBy(xpath = "//*[@class='btn btn-default cart']")
+    public WebElement addToCartButton;
+    @FindBy(xpath = "//li[@class='active']")
+    public WebElement shoppingCartText;
+    @FindBy(xpath = "//*[@class='btn btn-default check_out']")
+    public WebElement proceedToCheckoutButton;
+    @FindBy(xpath = "//*[text()='Register / Login']")
+    public WebElement registerLoginButton;
+    @FindBy(xpath = "//*[@class='address item box']")
+    public WebElement deliveryAddressText;
+    @FindBy(xpath = "//*[@class='address alternate_item box']")
+    public WebElement billingAddressText;
+    @FindBy(xpath = "//*[@class='form-control']")
+    public WebElement commentTextArea;
+    @FindBy(xpath = "//*[@class='btn btn-default check_out']")
+    public WebElement placeOrderButton;
+    @FindBy(xpath = "//*[@name='name_on_card']")
+    public WebElement paymentNameBox;
+    @FindBy(xpath = "//*[@class='form-control btn btn-primary submit-button']")
+    public WebElement payAndConfirmButton;
+    @FindBy(xpath = "//*[contains(text(), 'Your order has been placed successfully!')]")
+    public WebElement payPlacedSuccessfullyText;
+    @FindBy(xpath = "//*[@class='btn btn-primary']")
+    public WebElement deleteContinueButton;
+    @FindBy(xpath = "//*[@class='cart_quantity_delete']")
+    public WebElement cartQuantityDelete;
+    @FindBy(xpath = "//*[text()='Cart is empty!']")
+    public WebElement cartIsEmpty;
 
 }

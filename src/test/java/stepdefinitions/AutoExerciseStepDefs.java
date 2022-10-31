@@ -16,6 +16,7 @@ import utilities.ReusableMethods;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class AutoExerciseStepDefs {
     AutoExercisePage autoexPage = new AutoExercisePage();
@@ -23,6 +24,7 @@ public class AutoExerciseStepDefs {
     Actions actions = new Actions(Driver.getDriver());
 
     SoftAssert softAssert = new SoftAssert();
+    Random rnd = new Random();
 
 
     @Given("Navigate to {string} autoexercise")
@@ -128,6 +130,8 @@ public class AutoExerciseStepDefs {
     @Then("Verify that ACCOUNT DELETED! is visible and click Continue button")
     public void verifyThatACCOUNTDELETEDIsVisibleAndClickContinueButton() {
         assert autoexPage.deleteAccountText.isDisplayed();
+        ReusableMethods.waitFor(2);
+        autoexPage.deleteContinueButton.click();
     }
 
     @Then("Verify Login to your account is visible")
@@ -258,8 +262,10 @@ public class AutoExerciseStepDefs {
 
     @And("Click on View Product of first product")
     public void clickOnViewProductOfFirstProduct() {
+
         List<WebElement> wievProductsList = autoexPage.viewProductsList;
-        ReusableMethods.jsScrollClick(wievProductsList.get(0));
+        int index = rnd.nextInt(wievProductsList.size() - 1);
+        ReusableMethods.jsScrollClick(wievProductsList.get(index));
     }
 
     @And("User is landed to product detail page")
@@ -352,36 +358,161 @@ public class AutoExerciseStepDefs {
 
     @Then("Verify both products are added to Cart")
     public void verifyBothProductsAreAddedToCart() {
-        assert autoexPage.cartShoppingList.size()==2;
+        assert autoexPage.cartShoppingList.size() == 2;
     }
 
     @Then("Verify their prices, quantity and total price")
     public void verifyTheirPricesQuantityAndTotalPrice() {
 
-        int firstExpectedPrice= Integer.parseInt(autoexPage.productsPriceList.get(0).getText().replaceAll("\\D",""));
+        int firstExpectedPrice = Integer.parseInt(autoexPage.productsPriceList.get(0).getText().replaceAll("\\D", ""));
         System.out.println("firstExpectedPrice = " + firstExpectedPrice);
-        int secondtExpectedPrice= Integer.parseInt(autoexPage.productsPriceList.get(2).getText().replaceAll("\\D",""));
+        int secondtExpectedPrice = Integer.parseInt(autoexPage.productsPriceList.get(2).getText().replaceAll("\\D", ""));
         System.out.println("secondtExpectedPrice = " + secondtExpectedPrice);
-        int expectedTotalPrice=firstExpectedPrice+secondtExpectedPrice;
+        int expectedTotalPrice = firstExpectedPrice + secondtExpectedPrice;
         System.out.println("expectedTotalPrice = " + expectedTotalPrice);
-        int firstActualPrice= Integer.parseInt(autoexPage.cartPriceList.get(0).getText().replaceAll("\\D",""));
+        int firstActualPrice = Integer.parseInt(autoexPage.cartPriceList.get(0).getText().replaceAll("\\D", ""));
         System.out.println("firstActualPrice = " + firstActualPrice);
-        int secondActualPrice= Integer.parseInt(autoexPage.cartPriceList.get(1).getText().replaceAll("\\D",""));
+        int secondActualPrice = Integer.parseInt(autoexPage.cartPriceList.get(1).getText().replaceAll("\\D", ""));
         System.out.println("secondActualPrice = " + secondActualPrice);
-        int actualTotalPrice=firstActualPrice+secondActualPrice;
+        int actualTotalPrice = firstActualPrice + secondActualPrice;
         System.out.println("actualTotalPrice = " + actualTotalPrice);
-        String acrtualFirstProductQuantity=autoexPage.productQuantityList.get(0).getText();
+        String acrtualFirstProductQuantity = autoexPage.productQuantityList.get(0).getText();
         System.out.println("acrtualFirstProductQuantity = " + acrtualFirstProductQuantity);
-        String acrtualSecondProductQuantity=autoexPage.productQuantityList.get(1).getText();
+        String acrtualSecondProductQuantity = autoexPage.productQuantityList.get(1).getText();
         System.out.println("acrtualSecondProductQuantity = " + acrtualSecondProductQuantity);
 
-        softAssert.assertEquals(firstActualPrice,firstExpectedPrice);
-        softAssert.assertEquals(secondActualPrice,secondtExpectedPrice);
-        softAssert.assertEquals(actualTotalPrice,expectedTotalPrice);
-        softAssert.assertEquals(acrtualFirstProductQuantity,"1");
-        softAssert.assertEquals(acrtualSecondProductQuantity,"1");
+        softAssert.assertEquals(firstActualPrice, firstExpectedPrice);
+        softAssert.assertEquals(secondActualPrice, secondtExpectedPrice);
+        softAssert.assertEquals(actualTotalPrice, expectedTotalPrice);
+        softAssert.assertEquals(acrtualFirstProductQuantity, "1");
+        softAssert.assertEquals(acrtualSecondProductQuantity, "1");
         softAssert.assertAll();
+    }
 
+    @And("Click View Product for any product on home page")
+    public void clickViewProductForAnyProductOnHomePage() {
+        List<WebElement> wievProductsList = autoexPage.viewProductsList;
+        ReusableMethods.jsScrollClick(wievProductsList.get(0));
+    }
 
+    @Then("Verify product detail is opened")
+    public void verifyProductDetailIsOpened() {
+        assert autoexPage.productDetail.isDisplayed();
+    }
+
+    @And("Increase quantity to {int}")
+    public void increaseQuantityTo(int index) {
+        autoexPage.productQuantityBox.clear();
+        autoexPage.productQuantityBox.sendKeys(index + "");
+    }
+
+    @And("Click Add to cart button")
+    public void clickAddToCartButton() {
+        autoexPage.addToCartButton.click();
+    }
+
+    @Then("Verify that product is displayed in cart page with exact quantity")
+    public void verifyThatProductIsDisplayedInCartPageWithExactQuantity() {
+        String expectedQuantity = "4";
+        String actualQuantity = autoexPage.productQuantityList.get(0).getText();
+        assert actualQuantity.equals(expectedQuantity);
+    }
+
+    @And("Add products to cart")
+    public void addProductsToCart() {
+        ReusableMethods.jsScrollClick(autoexPage.productsAddCartList.get(1));
+    }
+
+    @Then("Verify that cart page is displayed")
+    public void verifyThatCartPageIsDisplayed() {
+        assert autoexPage.shoppingCartText.isDisplayed();
+    }
+
+    @And("Click Proceed To Checkout")
+    public void clickProceedToCheckout() {
+        autoexPage.proceedToCheckoutButton.click();
+    }
+
+    @And("Fill all details in Signup and create account")
+    public void fillAllDetailsInSignupAndCreateAccount() {
+        autoexPage.nameBox.sendKeys(faker.name().name());
+        actions.sendKeys(Keys.TAB).
+                sendKeys(faker.internet().emailAddress()).
+                sendKeys(Keys.ENTER).perform();
+        autoexPage.maleRadioButton.click();
+        actions.sendKeys(Keys.TAB).sendKeys(Keys.TAB).
+                sendKeys(faker.internet().password()).sendKeys(Keys.TAB).
+                sendKeys("22").sendKeys(Keys.TAB).
+                sendKeys("April").sendKeys(Keys.TAB).
+                sendKeys("1988").sendKeys(Keys.TAB).
+                sendKeys(Keys.SPACE).sendKeys(Keys.TAB).
+                sendKeys(Keys.SPACE).sendKeys(Keys.TAB).
+                sendKeys(faker.name().firstName()).sendKeys(Keys.TAB).
+                sendKeys(faker.name().lastName()).sendKeys(Keys.TAB).
+                sendKeys(faker.company().name()).sendKeys(Keys.TAB).
+                sendKeys(faker.address().fullAddress()).sendKeys(Keys.TAB).
+                sendKeys(Keys.TAB).sendKeys("India").
+                sendKeys(Keys.TAB).sendKeys(faker.address().state()).
+                sendKeys(Keys.TAB).sendKeys(faker.address().city()).
+                sendKeys(Keys.TAB).sendKeys(faker.address().zipCode()).
+                sendKeys(Keys.TAB).sendKeys(faker.phoneNumber().cellPhone()).
+                sendKeys(Keys.TAB).sendKeys(Keys.ENTER).perform();
+    }
+
+    @Then("Verify Address Details and Review Your Order")
+    public void verifyAddressDetailsAndReviewYourOrder() {
+        String[] actualAdressArr = autoexPage.deliveryAddressText.getText().split(" ");
+        String[] expectedAdressArr = autoexPage.billingAddressText.getText().split(" ");
+        for (int i = 2; i < actualAdressArr.length; i++) {
+            System.out.println("expectedAdressArr = " + expectedAdressArr[i]);
+            softAssert.assertEquals(actualAdressArr[i], expectedAdressArr[i]);
+        }
+        softAssert.assertAll();
+    }
+
+    @And("Enter description in comment text area and click Place Order")
+    public void enterDescriptionInCommentTextAreaAndClickPlaceOrder() {
+        autoexPage.commentTextArea.sendKeys(faker.lorem().paragraph(20));
+        autoexPage.placeOrderButton.click();
+    }
+
+    @And("Enter payment details: Name on Card, Card Number, CVC, Expiration date")
+    public void enterPaymentDetailsNameOnCardCardNumberCVCExpirationDate() {
+        autoexPage.paymentNameBox.sendKeys(faker.name().fullName());
+        actions.sendKeys(Keys.TAB).
+                sendKeys("1234-4567-1789-1221").
+                sendKeys(Keys.TAB).
+                sendKeys("213").
+                sendKeys(Keys.TAB).
+                sendKeys("12").
+                sendKeys(Keys.TAB).
+                sendKeys("2024").
+                perform();
+    }
+
+    @And("Click Pay and Confirm Order button")
+    public void clickPayAndConfirmOrderButton() {
+        autoexPage.payAndConfirmButton.click();
+    }
+
+    @Then("Verify success message Your order has been placed successfully!")
+    public void verifySuccessMessageYourOrderHasBeenPlacedSuccessfully() {
+        assert autoexPage.payPlacedSuccessfullyText.isDisplayed();
+    }
+
+    @And("Click on Register_Login button")
+    public void clickOnRegister_LoginButton() {
+        autoexPage.registerLoginButton.click();
+    }
+
+    @And("Click X button corresponding to particular product")
+    public void clickXButtonCorrespondingToParticularProduct() {
+        autoexPage.cartQuantityDelete.click();
+
+    }
+
+    @And("Verify that product is removed from the cart.")
+    public void verifyThatProductIsRemovedFromTheCart() {
+        assert autoexPage.cartShoppingList.isEmpty();
     }
 }
