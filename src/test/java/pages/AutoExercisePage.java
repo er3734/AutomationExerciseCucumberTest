@@ -140,7 +140,17 @@ public class AutoExercisePage {
     public WebElement deleteContinueButton;
     @FindBy(xpath = "//*[@class='cart_quantity_delete']")
     public WebElement cartQuantityDelete;
-    @FindBy(xpath = "//*[text()='Cart is empty!']")
+    @FindBy(xpath = "(//*[@class='text-center'])[3]")
     public WebElement cartIsEmpty;
+    @FindBy(xpath = "//*[@class='badge pull-right']")
+    public List<WebElement>categoryList;
+    @FindBy(xpath = "(//div[@class='panel-body'])[1]//ul//li//a")
+    public List<WebElement> womenCategoryList;
+    @FindBy(xpath = "//*[@class='title text-center']")
+    public WebElement productsCategoryText;
+    @FindBy(xpath = "(//*[@class='panel-body'])[2]//li//a")
+    public List<WebElement> menCategoryList;
+    @FindBy(xpath = "//*[@class='brands-name']//li//a")
+    public List<WebElement>brandsList;
 
 }

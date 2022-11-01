@@ -14,7 +14,6 @@ import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.ReusableMethods;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -25,6 +24,8 @@ public class AutoExerciseStepDefs {
 
     SoftAssert softAssert = new SoftAssert();
     Random rnd = new Random();
+
+    int brandIndex;
 
 
     @Given("Navigate to {string} autoexercise")
@@ -513,6 +514,82 @@ public class AutoExerciseStepDefs {
 
     @And("Verify that product is removed from the cart.")
     public void verifyThatProductIsRemovedFromTheCart() {
+        ReusableMethods.waitFor(3);
+        autoexPage.cartShoppingList.forEach(t -> System.out.println(t.getText()));
         assert autoexPage.cartShoppingList.isEmpty();
+        assert autoexPage.cartIsEmpty.isDisplayed();
+    }
+
+    @And("Click on Women category")
+    public void clickOnWomenCategory() {
+
+        ReusableMethods.jsScrollClick(autoexPage.categoryList.get(0));
+    }
+
+    @And("Click on any category link under Women category")
+    public void clickOnAnyCategoryLinkUnderWomenCategory() {
+        int index = rnd.nextInt(autoexPage.womenCategoryList.size() - 1);
+        ReusableMethods.jsScrollClick(autoexPage.womenCategoryList.get(index));
+    }
+
+    @Then("Verify that category page is displayed and confirm text WOMEN - TOPS PRODUCTS")
+    public void verifyThatCategoryPageIsDisplayedAndConfirmTextWOMENTOPSPRODUCTS() {
+        assert autoexPage.productsCategoryText.getText().contains("WOMEN");
+    }
+
+    @And("On left side bar, click on any sub-category link of Men category")
+    public void onLeftSideBarClickOnAnySubCategoryLinkOfMenCategory() {
+        autoexPage.categoryList.get(1).click();
+        int index = rnd.nextInt(autoexPage.menCategoryList.size() - 1);
+        autoexPage.menCategoryList.get(index).click();
+    }
+
+    @And("Verify that user is navigated to that category page")
+    public void verifyThatUserIsNavigatedToThatCategoryPage() {
+        assert autoexPage.productsCategoryText.getText().contains("MEN");
+    }
+
+    @Then("Verify that Brands are visible on left side bar")
+    public void verifyThatBrandsAreVisibleOnLeftSideBar() {
+        autoexPage.brandsList.forEach(t -> System.out.println(t.getText()));
+        assert !autoexPage.brandsList.isEmpty();
+    }
+
+    @And("Click on any brand name")
+    public void clickOnAnyBrandName() {
+        brandIndex = rnd.nextInt(autoexPage.brandsList.size() - 1);
+        ReusableMethods.jsScrollClick(autoexPage.brandsList.get(brandIndex));
+    }
+
+    @Then("Verify that user is navigated to brand page and brand products are displayed")
+    public void verifyThatUserIsNavigatedToBrandPageAndBrandProductsAreDisplayed() {
+        String expectedProducts = autoexPage.brandsList.get(brandIndex).getText().
+                replaceAll("\\(", "").
+                replaceAll("\\)", "").replaceAll("\\d", "").
+                replaceFirst("\\s","");
+        String actualProducts = autoexPage.productsCategoryText.getText();
+        System.out.println("actualProducts = " + actualProducts);
+        System.out.println("expectedProducts = " + expectedProducts);
+        assert actualProducts.contains(expectedProducts);
+        assert !autoexPage.urunlerList.isEmpty();
+    }
+
+    @And("On left side bar, click on any other brand link")
+    public void onLeftSideBarClickOnAnyOtherBrandLink() {
+        brandIndex=rnd.nextInt(autoexPage.brandsList.size() - 1);
+        ReusableMethods.jsScrollClick(autoexPage.brandsList.get(brandIndex));
+    }
+
+    @Then("Verify that user is navigated to that brand page and can see products")
+    public void verifyThatUserIsNavigatedToThatBrandPageAndCanSeeProducts() {
+        String expectedProducts = autoexPage.brandsList.get(brandIndex).getText().
+                replaceAll("\\(", "").
+                replaceAll("\\)", "").replaceAll("\\d", "").
+                replaceFirst("\\s","");
+        String actualProducts = autoexPage.productsCategoryText.getText();
+        System.out.println("actualProducts = " + actualProducts);
+        System.out.println("expectedProducts = " + expectedProducts);
+        assert actualProducts.contains(expectedProducts);
+        assert !autoexPage.urunlerList.isEmpty();
     }
 }
