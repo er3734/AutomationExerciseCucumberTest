@@ -14,6 +14,7 @@ import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.ReusableMethods;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -24,10 +25,16 @@ public class AutoExerciseStepDefs {
 
     SoftAssert softAssert = new SoftAssert();
     Random rnd = new Random();
-    String expectedItemsPtoductName;
-
+    String firstName;
+    String lastName;
+    String company;
+    String address;
+    String city;
+    String state;
+    String zipcode;
+    String phoneNumber;
+    String country;
     int brandIndex;
-
 
     @Given("Navigate to {string} autoexercise")
     public void navigateToAutoexercise(String url) {
@@ -358,7 +365,6 @@ public class AutoExerciseStepDefs {
 
     @Then("Verify their prices, quantity and total price")
     public void verifyTheirPricesQuantityAndTotalPrice() {
-
         int firstExpectedPrice = Integer.parseInt(autoexPage.productsPriceList.get(0).getText().replaceAll("\\D", ""));
         System.out.println("firstExpectedPrice = " + firstExpectedPrice);
         int secondtExpectedPrice = Integer.parseInt(autoexPage.productsPriceList.get(2).getText().replaceAll("\\D", ""));
@@ -430,6 +436,16 @@ public class AutoExerciseStepDefs {
 
     @And("Fill all details in Signup and create account")
     public void fillAllDetailsInSignupAndCreateAccount() {
+        firstName=faker.name().firstName();
+        lastName=faker.name().lastName();
+        company=faker.company().name();
+        address=faker.address().fullAddress();
+        country="India";
+        city=faker.address().city();
+        state=faker.address().state();
+        zipcode=faker.address().zipCode();
+        phoneNumber=faker.phoneNumber().cellPhone();
+
         autoexPage.nameBox.sendKeys(faker.name().name());
         actions.sendKeys(Keys.TAB).
                 sendKeys(faker.internet().emailAddress()).
@@ -442,15 +458,15 @@ public class AutoExerciseStepDefs {
                 sendKeys("1988").sendKeys(Keys.TAB).
                 sendKeys(Keys.SPACE).sendKeys(Keys.TAB).
                 sendKeys(Keys.SPACE).sendKeys(Keys.TAB).
-                sendKeys(faker.name().firstName()).sendKeys(Keys.TAB).
-                sendKeys(faker.name().lastName()).sendKeys(Keys.TAB).
-                sendKeys(faker.company().name()).sendKeys(Keys.TAB).
-                sendKeys(faker.address().fullAddress()).sendKeys(Keys.TAB).
-                sendKeys(Keys.TAB).sendKeys("India").
-                sendKeys(Keys.TAB).sendKeys(faker.address().state()).
-                sendKeys(Keys.TAB).sendKeys(faker.address().city()).
-                sendKeys(Keys.TAB).sendKeys(faker.address().zipCode()).
-                sendKeys(Keys.TAB).sendKeys(faker.phoneNumber().cellPhone()).
+                sendKeys(firstName).sendKeys(Keys.TAB).
+                sendKeys(lastName).sendKeys(Keys.TAB).
+                sendKeys(company).sendKeys(Keys.TAB).
+                sendKeys(address).sendKeys(Keys.TAB).
+                sendKeys(Keys.TAB).sendKeys(country).
+                sendKeys(Keys.TAB).sendKeys(state).
+                sendKeys(Keys.TAB).sendKeys(city).
+                sendKeys(Keys.TAB).sendKeys(zipcode).
+                sendKeys(Keys.TAB).sendKeys(phoneNumber).
                 sendKeys(Keys.TAB).sendKeys(Keys.ENTER).perform();
     }
 
@@ -681,5 +697,27 @@ public class AutoExerciseStepDefs {
     @And("Verify that product is displayed in cart page")
     public void verifyThatProductIsDisplayedInCartPage() {
         assert !autoexPage.cartShoppingList.isEmpty();
+    }
+
+    @And("Verify that the delivery address is same address filled at the time registration of account")
+    public void verifyThatTheDeliveryAddressIsSameAddressFilledAtTheTimeRegistrationOfAccount() {
+        softAssert.assertTrue(autoexPage.deliveryAddressFullName.getText().contains(firstName+" "+lastName));
+        softAssert.assertEquals(autoexPage.deliveryAddressAddress.getText(),address);
+        softAssert.assertEquals(autoexPage.deliveryAddressCompany.getText(),company);
+        softAssert.assertEquals(autoexPage.deliveryAddressCityStateZipcode.getText(),city+" "+state+" "+zipcode);
+        softAssert.assertEquals(autoexPage.deliveryAddressCountry.getText(),country);
+        softAssert.assertEquals(autoexPage.deliveryAddressPhone.getText(),phoneNumber);
+        softAssert.assertAll();
+    }
+
+    @And("Verify that the billing address is same address filled at the time registration of account")
+    public void verifyThatTheBillingAddressIsSameAddressFilledAtTheTimeRegistrationOfAccount() {
+        softAssert.assertTrue(autoexPage.billingAddressFullName.getText().contains(firstName+" "+lastName));
+        softAssert.assertEquals(autoexPage.billingAddressAddress.getText(),address);
+        softAssert.assertEquals(autoexPage.billingAddressCompany.getText(),company);
+        softAssert.assertEquals(autoexPage.billingAddressCityStateZipcode.getText(),city+" "+state+" "+zipcode);
+        softAssert.assertEquals(autoexPage.billingAddressCountry.getText(),country);
+        softAssert.assertEquals(autoexPage.billingAddressPhone.getText(),phoneNumber);
+        softAssert.assertAll();
     }
 }

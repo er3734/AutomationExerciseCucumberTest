@@ -164,5 +164,31 @@ public class AutoExercisePage {
     public WebElement recommendedItemsText;
     @FindBy(xpath = "//div[@class='item active']//div[1]//div[1]//div//a")
     public List<WebElement> recommendItemsAddToCartList;
+    @FindBy(xpath = "(//*[@class='address_firstname address_lastname'])[1]")
+    public WebElement deliveryAddressFullName;
+    @FindBy(xpath = "(//*[@class='address_address1 address_address2'])[1]")
+    public WebElement deliveryAddressCompany;
+    @FindBy(xpath = "(//*[@class='address_address1 address_address2'])[2]")
+    public WebElement deliveryAddressAddress;
+    @FindBy(xpath = "(//*[@class='address_city address_state_name address_postcode'])[1]")
+    public WebElement deliveryAddressCityStateZipcode;
+    @FindBy(xpath = "(//*[@class='address_country_name'])[1]")
+    public WebElement deliveryAddressCountry;
+    @FindBy(xpath = "(//*[@class='address_phone'])[1]")
+    public WebElement deliveryAddressPhone;
+    @FindBy(xpath = "(//*[@class='address_firstname address_lastname'])[2]")
+    public WebElement billingAddressFullName;
+    @FindBy(xpath = "(//*[@class='address_address1 address_address2'])[4]")
+    public WebElement billingAddressCompany;
+    @FindBy(xpath = "(//*[@class='address_address1 address_address2'])[5]")
+    public WebElement billingAddressAddress;
+    @FindBy(xpath = "(//*[@class='address_city address_state_name address_postcode'])[2]")
+    public WebElement billingAddressCityStateZipcode;
+    @FindBy(xpath = "(//*[@class='address_country_name'])[2]")
+    public WebElement billingAddressCountry;
+    @FindBy(xpath = "(//*[@class='address_phone'])[2]")
+    public WebElement billingAddressPhone;
+
+
 
 }
