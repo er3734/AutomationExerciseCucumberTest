@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="18.536">
-    <testcase classname="TC19 View &amp; Cart Brand Products" name="View &amp; Cart Brand Products" time="18.362">
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="9.204">
+    <testcase classname="TC22 Add to cart from Recommended items" name="Add to cart from Recommended items" time="8.93">
         <system-out>
             <![CDATA[Given Navigate to "autoexUrl" autoexercise..................................passed
 Then Verify that home page is visible successfully..........................passed
-And Click on Products button................................................passed
-Then Verify that Brands are visible on left side bar........................passed
-And Click on any brand name.................................................passed
-Then Verify that user is navigated to brand page and brand products are displayed.passed
-And On left side bar, click on any other brand link.........................passed
-Then Verify that user is navigated to that brand page and can see products..passed
+And Scroll to bottom of page................................................passed
+And Verify RECOMMENDED ITEMS are visible....................................passed
+And Click on Add To Cart on Recommended product.............................passed
+And Click View Cart button..................................................passed
+And Verify that product is displayed in cart page...........................passed
 ]]>
         </system-out>
     </testcase>

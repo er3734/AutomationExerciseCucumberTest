@@ -24,6 +24,7 @@ public class AutoExerciseStepDefs {
 
     SoftAssert softAssert = new SoftAssert();
     Random rnd = new Random();
+    String expectedItemsPtoductName;
 
     int brandIndex;
 
@@ -153,8 +154,8 @@ public class AutoExerciseStepDefs {
 
     @And("Enter incorrect email address and password")
     public void enterIncorrectEmailAddressAndPassword() {
-        autoexPage.loginEmailBox.sendKeys(ConfigReader.getProperty("validEmail"));
-        actions.sendKeys(Keys.TAB).sendKeys(ConfigReader.getProperty("validPassword")).perform();
+        autoexPage.loginEmailBox.sendKeys(ConfigReader.getProperty("wrongEmail"));
+        actions.sendKeys(Keys.TAB).sendKeys(ConfigReader.getProperty("wrongPassword")).perform();
     }
 
     @And("Verify error Your email or password is incorrect! is visible")
@@ -282,13 +283,6 @@ public class AutoExerciseStepDefs {
         softAssert.assertTrue(autoexPage.productCondition.isDisplayed());
         softAssert.assertTrue(autoexPage.productBrand.isDisplayed());
         softAssert.assertAll();
-
-    }
-
-    @And("Enter product name in search input and click search button")
-    public void enterProductNameInSearchInputAndClickSearchButton() {
-        autoexPage.searchProductsBox.sendKeys("T-Shirt");
-        autoexPage.searchButton.click();
     }
 
     @Then("Verify SEARCHED PRODUCTS is visible")
@@ -299,7 +293,7 @@ public class AutoExerciseStepDefs {
 
     @Then("Verify all the products related to search are visible")
     public void verifyAllTheProductsRelatedToSearchAreVisible() {
-        List<WebElement> searchTshirtList = autoexPage.searchTShirtList;
+        List<WebElement> searchTshirtList = autoexPage.searchPtoductList;
         for (int i = 0; i < searchTshirtList.size(); i++) {
             searchTshirtList.get(i).getText().contains("T-Shirt");
             i++;
@@ -354,7 +348,7 @@ public class AutoExerciseStepDefs {
 
     @And("Click View Cart button")
     public void clickViewCartButton() {
-        autoexPage.viewCartButton.click();
+        ReusableMethods.jsScrollClick(autoexPage.viewCartButton);
     }
 
     @Then("Verify both products are added to Cart")
@@ -522,7 +516,6 @@ public class AutoExerciseStepDefs {
 
     @And("Click on Women category")
     public void clickOnWomenCategory() {
-
         ReusableMethods.jsScrollClick(autoexPage.categoryList.get(0));
     }
 
@@ -566,7 +559,7 @@ public class AutoExerciseStepDefs {
         String expectedProducts = autoexPage.brandsList.get(brandIndex).getText().
                 replaceAll("\\(", "").
                 replaceAll("\\)", "").replaceAll("\\d", "").
-                replaceFirst("\\s","");
+                replaceFirst("\\s", "");
         String actualProducts = autoexPage.productsCategoryText.getText();
         System.out.println("actualProducts = " + actualProducts);
         System.out.println("expectedProducts = " + expectedProducts);
@@ -576,7 +569,7 @@ public class AutoExerciseStepDefs {
 
     @And("On left side bar, click on any other brand link")
     public void onLeftSideBarClickOnAnyOtherBrandLink() {
-        brandIndex=rnd.nextInt(autoexPage.brandsList.size() - 1);
+        brandIndex = rnd.nextInt(autoexPage.brandsList.size() - 1);
         ReusableMethods.jsScrollClick(autoexPage.brandsList.get(brandIndex));
     }
 
@@ -585,11 +578,108 @@ public class AutoExerciseStepDefs {
         String expectedProducts = autoexPage.brandsList.get(brandIndex).getText().
                 replaceAll("\\(", "").
                 replaceAll("\\)", "").replaceAll("\\d", "").
-                replaceFirst("\\s","");
+                replaceFirst("\\s", "");
         String actualProducts = autoexPage.productsCategoryText.getText();
         System.out.println("actualProducts = " + actualProducts);
         System.out.println("expectedProducts = " + expectedProducts);
         assert actualProducts.contains(expectedProducts);
         assert !autoexPage.urunlerList.isEmpty();
+    }
+
+    @And("Add those products to cart")
+    public void addThoseProductsToCart() {
+        for (int i = 0; i < autoexPage.productsAddCartList.size(); i++) {
+            ReusableMethods.jsScrollClick(autoexPage.productsAddCartList.get(i));
+            ReusableMethods.waitFor(1);
+            autoexPage.continueShoppingButton.click();
+            i++;
+        }
+    }
+
+    @And("Submit login details")
+    public void submitLoginDetails() {
+        autoexPage.loginEmailBox.sendKeys(ConfigReader.getProperty("validEmail"));
+        actions.sendKeys(Keys.TAB).sendKeys(ConfigReader.getProperty("validPassword")).
+                sendKeys(Keys.ENTER).perform();
+    }
+
+    @And("Again, go to Cart page")
+    public void againGoToCartPage() {
+        autoexPage.cartButton.click();
+    }
+
+    @And("Enter product {string} in search input and click search button")
+    public void enterProductInSearchInputAndClickSearchButton(String input) {
+        autoexPage.searchProductsBox.sendKeys(input);
+        autoexPage.searchButton.click();
+    }
+
+    @Then("Verify all the products related to {string} are visible")
+    public void verifyAllTheProductsRelatedToAreVisible(String input) {
+        List<WebElement> searchTshirtList = autoexPage.searchPtoductList;
+        for (int i = 0; i < searchTshirtList.size(); i++) {
+            searchTshirtList.get(i).getText().contains(input);
+            i++;
+        }
+    }
+
+    @Then("Verify {string} that products are visible in cart")
+    public void verifyThatProductsAreVisibleInCart(String input) {
+        for (WebElement w : autoexPage.cartProductNameList
+        ) {
+            assert w.getText().contains(input);
+        }
+    }
+
+    @And("Verify that {string} products are visible in cart after login as well")
+    public void verifyThatProductsAreVisibleInCartAfterLoginAsWell(String input) {
+        for (WebElement w : autoexPage.cartProductNameList
+        ) {
+            assert w.getText().contains(input);
+        }
+    }
+
+    @And("Verify Write Your Review is visible")
+    public void verifyWriteYourReviewIsVisible() {
+        ReusableMethods.jsScroll(autoexPage.wireteYourReviewText);
+        assert autoexPage.wireteYourReviewText.isDisplayed();
+    }
+
+    @And("Verify success message Thank you for your review.")
+    public void verifySuccessMessageThankYouForYourReview() {
+        assert autoexPage.successMessageThankYouforYourReview.isDisplayed();
+    }
+
+    @And("Enter name, email and review an click Submit button")
+    public void enterNameEmailAndReviewAnClickSubmitButton() {
+        autoexPage.reviewNameBox.sendKeys(faker.name().fullName());
+        actions.sendKeys(Keys.TAB).
+                sendKeys(faker.internet().emailAddress()).
+                sendKeys(Keys.TAB).
+                sendKeys(faker.lorem().paragraph()).
+                sendKeys(Keys.TAB).
+                sendKeys(Keys.ENTER).perform();
+    }
+
+    @And("Scroll to bottom of page")
+    public void scrollToBottomOfPage() {
+        ReusableMethods.jsScroll(autoexPage.recommendedItemsText);
+    }
+
+    @And("Verify RECOMMENDED ITEMS are visible")
+    public void verifyRECOMMENDEDITEMSAreVisible() {
+        assert autoexPage.recommendedItemsText.isDisplayed();
+    }
+
+    @And("Click on Add To Cart on Recommended product")
+    public void clickOnAddToCartOnRecommendedProduct() {
+        int index = rnd.nextInt(autoexPage.recommendItemsAddToCartList.size() - 1);
+        autoexPage.recommendItemsAddToCartList.get(index).click();
+
+    }
+
+    @And("Verify that product is displayed in cart page")
+    public void verifyThatProductIsDisplayedInCartPage() {
+        assert !autoexPage.cartShoppingList.isEmpty();
     }
 }

@@ -85,7 +85,7 @@ public class AutoExercisePage {
     @FindBy(xpath = "//*[text()='Searched Products']")
     public WebElement searchProductsText;
     @FindBy(xpath = "//*[contains(text(), 'T-Shirt')]")
-    public List<WebElement> searchTShirtList;
+    public List<WebElement> searchPtoductList;
     @FindBy(xpath = "//*[@class='btn btn-default btn-lg']")
     public WebElement searchButton;
     @FindBy(xpath = "//*[text()='Subscription']")
@@ -97,19 +97,19 @@ public class AutoExercisePage {
     @FindBy(xpath = "//*[text()=' Cart']")
     public WebElement cartButton;
     @FindBy(xpath = "//*[@class='btn btn-default add-to-cart']")
-    public List<WebElement>productsAddCartList;
+    public List<WebElement> productsAddCartList;
     @FindBy(xpath = "//*[@class='btn btn-success close-modal btn-block']")
     public WebElement continueShoppingButton;
     @FindBy(xpath = "//*[text()='View Cart']")
     public WebElement viewCartButton;
     @FindBy(xpath = "//tbody//tr")
-    public List<WebElement>cartShoppingList;
+    public List<WebElement> cartShoppingList;
     @FindBy(xpath = "//tbody//tr//td[@class='cart_total']")
-    public List<WebElement>cartPriceList;
+    public List<WebElement> cartPriceList;
     @FindBy(xpath = "//*[contains(text(), 'Rs.')]")
-    public List<WebElement>productsPriceList;
+    public List<WebElement> productsPriceList;
     @FindBy(xpath = "//tbody//tr//td[@class='cart_quantity']//button")
-    public List<WebElement>productQuantityList;
+    public List<WebElement> productQuantityList;
     @FindBy(xpath = "//*[@class='product-information']")
     public WebElement productDetail;
     @FindBy(xpath = "//*[@id='quantity']")
@@ -143,7 +143,7 @@ public class AutoExercisePage {
     @FindBy(xpath = "(//*[@class='text-center'])[3]")
     public WebElement cartIsEmpty;
     @FindBy(xpath = "//*[@class='badge pull-right']")
-    public List<WebElement>categoryList;
+    public List<WebElement> categoryList;
     @FindBy(xpath = "(//div[@class='panel-body'])[1]//ul//li//a")
     public List<WebElement> womenCategoryList;
     @FindBy(xpath = "//*[@class='title text-center']")
@@ -151,6 +151,18 @@ public class AutoExercisePage {
     @FindBy(xpath = "(//*[@class='panel-body'])[2]//li//a")
     public List<WebElement> menCategoryList;
     @FindBy(xpath = "//*[@class='brands-name']//li//a")
-    public List<WebElement>brandsList;
+    public List<WebElement> brandsList;
+    @FindBy(xpath = "//tbody//tr//td//h4")
+    public List<WebElement> cartProductNameList;
+    @FindBy(xpath = "//*[text()='Write Your Review']")
+    public WebElement wireteYourReviewText;
+    @FindBy(xpath = "//input[@id='name']")
+    public WebElement reviewNameBox;
+    @FindBy(xpath = "//*[text()='Thank you for your review.']")
+    public WebElement successMessageThankYouforYourReview;
+    @FindBy(xpath = "(//*[@class='title text-center'])[2]")
+    public WebElement recommendedItemsText;
+    @FindBy(xpath = "//div[@class='item active']//div[1]//div[1]//div//a")
+    public List<WebElement> recommendItemsAddToCartList;
 
 }
