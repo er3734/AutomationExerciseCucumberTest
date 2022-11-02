@@ -188,6 +188,12 @@ public class AutoExercisePage {
     public WebElement billingAddressCountry;
     @FindBy(xpath = "(//*[@class='address_phone'])[2]")
     public WebElement billingAddressPhone;
+    @FindBy(xpath = "//*[@class='btn btn-default check_out']")
+    public WebElement dowloandInvoiceButton;
+    @FindBy(xpath = "//*[@class='fa fa-angle-up']")
+    public WebElement moveToUpButton;
+    @FindBy(xpath = "(//*[text()='Full-Fledged practice website for Automation Engineers'])[1]")
+    public WebElement fullFledgedPracticeWebsiteForAutomationEngineersText;
 
 
 

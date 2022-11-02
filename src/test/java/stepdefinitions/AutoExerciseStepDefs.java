@@ -14,6 +14,8 @@ import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.ReusableMethods;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -719,5 +721,39 @@ public class AutoExerciseStepDefs {
         softAssert.assertEquals(autoexPage.billingAddressCountry.getText(),country);
         softAssert.assertEquals(autoexPage.billingAddressPhone.getText(),phoneNumber);
         softAssert.assertAll();
+    }
+
+    @And("Click Download Invoice button and verify invoice is downloaded successfully.")
+    public void clickDownloadInvoiceButtonAndVerifyInvoiceIsDownloadedSuccessfully() {
+        autoexPage.dowloandInvoiceButton.click();
+        ReusableMethods.waitFor(2);
+        String dosyaYolu="C:\\Users\\erdi3\\Downloads\\invoice.txt";
+        Assert.assertTrue(Files.exists(Paths.get(dosyaYolu)));
+    }
+
+
+    @And("Scroll down page to bottom")
+    public void scrollDownPageToBottom() {
+        ReusableMethods.jsScroll(autoexPage.subscriptionText);
+    }
+
+    @And("Verify SUBSCRIPTION is visible")
+    public void verifySUBSCRIPTIONIsVisible() {
+        assert autoexPage.subscriptionText.isDisplayed();
+    }
+
+    @And("Click on arrow at bottom right side to move upward")
+    public void clickOnArrowAtBottomRightSideToMoveUpward() {
+        ReusableMethods.jsScrollClick(autoexPage.moveToUpButton);
+    }
+
+    @And("Verify that page is scrolled up and Full-Fledged practice website for Automation Engineers text is visible on screen")
+    public void verifyThatPageIsScrolledUpAndFullFledgedPracticeWebsiteForAutomationEngineersTextIsVisibleOnScreen() {
+        assert autoexPage.fullFledgedPracticeWebsiteForAutomationEngineersText.isDisplayed();
+    }
+
+    @And("Scroll up page to top")
+    public void scrollUpPageToTop() {
+        ReusableMethods.jsScroll(autoexPage.fullFledgedPracticeWebsiteForAutomationEngineersText);
     }
 }
