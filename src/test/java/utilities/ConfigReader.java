@@ -7,14 +7,14 @@ import java.util.Properties;
 public class ConfigReader {
     public static Properties properties;
 
-    static {//Her methoddan once calışır
+    static {
 
         String dosyaYolu="configuration.properties";
         try {
             FileInputStream fis=new FileInputStream(dosyaYolu);
 
             properties=new Properties();
-            properties.load(fis);//fis'in okuduğu bilgileri properties'e yükledi
+            properties.load(fis);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -22,11 +22,6 @@ public class ConfigReader {
     }
     public static String getProperty(String key){
 
-        /*
-        test methodundan yolladığımız String key değerini alıp
-        Properties classından getProperty() methodunu kullanarak
-        bu key'e ait value'yu bize getirir
-         */
         return properties.getProperty(key);
     }
 }

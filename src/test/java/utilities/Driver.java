@@ -13,15 +13,8 @@ import java.time.Duration;
 public class Driver {
     private Driver() {
     }
-    static WebDriver driver;
 
-    /*
-       Testleri calistirdigimizda her seferinde yeni driver olusturdugu icin her test methodu icin yeni
-bir pencere (driver) aciyor.Eger driver'a bir deger atanmamissa yani driver==null ise
-bir kere driver'i calistir diyerek bir kere if icini calistiracak ve driver artik bir kere
- calistigi icin ve deger atandigi icin null olmayacak ve direk return edecek ve diger testlerimiz
- ayni pencerede (driver) uzerinde calisacak
-     */
+    static WebDriver driver;
 
     public static WebDriver getDriver() {
         if (driver == null) {
@@ -45,7 +38,6 @@ bir kere driver'i calistir diyerek bir kere if icini calistiracak ve driver arti
                 case "headles-chrome":
                     WebDriverManager.chromedriver().setup();
                     driver = new ChromeDriver(new ChromeOptions().setHeadless(true));
-                    //chrome'ı acmadan testlerimizi calıştırır
                     break;
                 default:
                     WebDriverManager.chromedriver().setup();
@@ -58,18 +50,18 @@ bir kere driver'i calistir diyerek bir kere if icini calistiracak ve driver arti
         }
         return driver;
     }
+
     public static void closeDriver() {
         if (driver != null) {
             driver.close();
-            driver = null;//kapandıktan sonra sonraki acmaları garanti altına almak
-            // için driverı tekrar null yaptık
+            driver = null;
         }
     }
+
     public static void quitDriver() {
-        if (driver != null) {//Değer atanmışsa kapat
+        if (driver != null) {
             driver.quit();
-            driver = null;//kapandıktan sonra sonraki acmaları garanti altına almak
-            // için driverı tekrar null yaptık
+            driver = null;
         }
     }
 }
